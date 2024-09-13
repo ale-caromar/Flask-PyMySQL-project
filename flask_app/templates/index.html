@@ -1,0 +1,63 @@
+
+{% extends 'base.html' %}
+
+{% block title %}Life Blue{% endblock %}
+
+{% block content %}
+    <div class="main-block">
+        <!-- Bloque izquierdo -->
+        <div class="block">
+            <div class="carousel">
+                <!-- Carrusel de imágenes -->
+                <div class="carousel-images">
+                    <img src="{{ url_for('static', filename='images/imagen1.jpg') }}" alt="Image 1">
+                    <img src="{{ url_for('static', filename='images/imagen2.jpg') }}" alt="Image 2">
+                    <img src="{{ url_for('static', filename='images/imagen3.jpg') }}" alt="Image 3">
+                </div>
+                <div class="carousel-buttons">
+                    <button class="carousel-button" id="prevButton"></button>
+                    <button class="carousel-button" id="nextButton"></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bloque derecho -->
+        <div class="block">
+            <h1>Gestión integral de servicios en psicología clínica</h1>
+            <div class="line-separator"></div>
+                <form action="login" method="post" class="login-form">
+                    <div class="login-form {% if get_flashed_messages(category_filter=['log_email']) %} is_invalid {% endif %}" id="professional_reg">
+                        <label for="email2"></label> 
+                        <input type="email" id="email2" name="email" placeholder="Correo electrónico">
+                        {% with messages = get_flashed_messages(category_filter=['log_email']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                {% for message in messages %}
+                                        <p>{{message}}</p>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <div class="login-form {% if get_flashed_messages(category_filter=['log_password']) %} is_invalid {% endif %}">                   
+                        <label for="password2"></label> 
+                        <input type="password" id="password2" name="password" placeholder="Contraseña">
+                        {% with messages = get_flashed_messages(category_filter=['log_password']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                {% for message in messages %}
+                                    <p>{{message}}</p>
+                                {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+                    <a href="#" class="link">¿Olvidaste tu contraseña?</a>
+                </form>
+                <div class="line-separator"></div>
+                <p><a href="{{ url_for('register_route') }}" class="link">Crea una cuenta</a> y descubre cómo podemos facilitar la gestión de tu trabajo!</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

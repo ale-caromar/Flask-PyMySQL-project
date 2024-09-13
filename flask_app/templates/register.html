@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrate{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="me-4">Regístrate</h2>
+        <div class="d-flex" style="gap: 15px;">
+            <a href="{{ url_for('index') }}" class="btn btn-warning btn-sm">Regresar</a>
+        </div>
+    </div>
+
+    <div class="line-separator"></div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <!-- Contenedor para centrar el formulario -->
+            <div class="d-flex justify-content-center">
+                <form action="/register" method="post" style="max-width: 600px; width: 100%;">
+                    <h5 class="card-title">Información de registro</h5>
+                    <div class="line-separator"></div>
+                    <!-- Información de registro -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label"><strong>Correo Electrónico:</strong></label>
+                        <input type="email" class="form-control {% if get_flashed_messages(category_filter=['reg_email']) %} is-invalid {% endif %}" id="email" name="email">
+                        {% with messages = get_flashed_messages(category_filter=['reg_email']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{message}}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label"><strong>Contraseña:</strong></label>
+                        <input type="password" class="form-control {% if get_flashed_messages(category_filter=['reg_password']) %} is-invalid {% endif %}" id="password" name="password">
+                        {% with messages = get_flashed_messages(category_filter=['reg_password']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{message}}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirm_password" class="form-label"><strong>Confirma Contraseña:</strong></label>
+                        <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                    </div>
+
+                    <div class="card-body"></div>
+
+                    <!-- Información Personal y de Contacto -->
+                    <h5 class="card-title">Información Personal y de Contacto</h5>
+                    <div class="line-separator"></div>
+
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label"><strong>Nombre:</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_first']) %} is-invalid {% endif %}" id="first_name" name="first_name">
+                        {% with messages = get_flashed_messages(category_filter=['reg_first']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{message}}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label"><strong>Apellidos:</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_last']) %} is-invalid {% endif %}" id="last_name" name="last_name">
+                        {% with messages = get_flashed_messages(category_filter=['reg_last']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{message}}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="docu_type" class="form-label"><strong>Tipo de Documento:</strong></label>
+                        <select id="docu_type" name="docu_type" class="form-control">
+                            <option value="none">Selecciona</option>
+                            <option value="cc">Cédula de ciudadanía</option>
+                            <option value="ce">Cédula de extranjería</option>
+                            <option value="pp">Pasaporte</option>
+                            <option value="ti">Tarjeta de identidad</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="docu_number" class="form-label"><strong>Número de Documento:</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_number']) %} is-invalid {% endif %}" id="docu_number" name="docu_number">
+                        {% with messages = get_flashed_messages(category_filter=['reg_number']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{message}}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone" class="form-label"><strong>Teléfono:</strong></label>
+                        <input type="text" class="form-control" id="phone" name="phone">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="address" class="form-label"><strong>Dirección:</strong></label>
+                        <input type="text" class="form-control" id="address" name="address">
+                    </div>
+
+                    <div class="card-body"></div>
+
+                    <!-- Información Profesional -->
+                    <h5 class="card-title">Información Profesional</h5>
+                    <div class="line-separator"></div>
+
+                    <div class="mb-3">
+                        <label for="university" class="form-label"><strong>Universidad:</strong></label>
+                        <input type="text" class="form-control" id="university" name="university">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="professional_card" class="form-label"><strong>Tarjeta Profesional:</strong></label>
+                        <input type="text" class="form-control" id="professional_card" name="professional_card">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="professional_reg" class="form-label"><strong>Registro ante Seccional de Salud:</strong></label>
+                        <input type="text" class="form-control" id="professional_reg" name="professional_reg">
+                    </div>
+
+                    <div class="mb-3">
+                        <label><strong>¿Tienes estudios de posgrado?</strong></label><br>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="postgrad_yes" name="postgrad" value="yes" class="form-check-input">
+                            <label for="postgrad_yes" class="form-check-label">Sí</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="postgrad_no" name="postgrad" value="no" class="form-check-input">
+                            <label for="postgrad_no" class="form-check-label">No</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3" id="postgrad_field" style="display: none;">
+                        <label for="other_degrees" class="form-label"><strong>Título de Posgrado:</strong></label>
+                        <input type="text" class="form-control" id="other_degrees" name="other_degrees">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var postgradYes = document.getElementById('postgrad_yes');
+        var postgradNo = document.getElementById('postgrad_no');
+        var postgradField = document.getElementById('postgrad_field');
+
+        if (postgradYes && postgradNo && postgradField) {
+            postgradYes.addEventListener('change', function() {
+                if (this.checked) {
+                    postgradField.style.display = 'block';
+                }
+            });
+
+            postgradNo.addEventListener('change', function() {
+                if (this.checked) {
+                    postgradField.style.display = 'none';
+                }
+            });
+        }
+    });
+</script>
+
+{% endblock %}

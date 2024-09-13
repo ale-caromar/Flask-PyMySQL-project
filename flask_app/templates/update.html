@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+
+{% block title %}Actualizar perfil{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="me-4">Actualizar perfil</h2>
+        <div class="d-flex" style="gap: 15px;">
+            <a href="{{ url_for('profile') }}" class="btn btn-warning btn-sm">Regresar</a>
+        </div>
+    </div>
+
+    <div class="line-separator"></div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-center">
+                <!-- Formulario para actualizar el perfil del usuario -->
+                <form action="{{ url_for('update_profile') }}" method="post" style="max-width: 600px; width: 100%;">
+                    <!-- Campo oculto para el id -->
+                    <input type="hidden" name="id" value="{{ user.id }}">
+                    <h5 class="card-title">Información Personal y de contacto</h5>
+                    <div class="line-separator"></div>
+                    <!-- Información Personal y de Contacto -->
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label"><strong>Nombre:</strong></label>
+                        <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label"><strong>Apellido:</strong></label>
+                        <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="email" class="form-label"><strong>Correo Electrónico:</strong></label>
+                        <input type="email" name="email" class="form-control" value="{{ user.email }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="phone" class="form-label"><strong>Teléfono:</strong></label>
+                        <input type="text" name="phone" class="form-control" value="{{ user.phone }}">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="address" class="form-label"><strong>Dirección:</strong></label>
+                        <input type="text" name="address" class="form-control" value="{{ user.address }}">
+                    </div>
+
+                    <div class="card-body"></div>
+
+                    <!-- Información Profesional -->
+                    <h5 class="card-title">Información Profesional</h5>
+                    <div class="line-separator"></div>
+
+                    <div class="mb-3">
+                        <label for="university" class="form-label"><strong>Universidad:</strong></label>
+                        <input type="text" name="university" class="form-control" value="{{ user.university }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="professional_card" class="form-label"><strong>Tarjeta Profesional:</strong></label>
+                        <input type="text" name="professional_card" class="form-control" value="{{ user.professional_card }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="professional_reg" class="form-label"><strong>Número de Registro Profesional:</strong></label>
+                        <input type="text" name="professional_reg" class="form-control" value="{{ user.professional_reg }}">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="other_degrees" class="form-label"><strong>Otros Títulos:</strong></label>
+                        <input type="text" name="other_degrees" class="form-control" value="{{ user.other_degrees if user.other_degrees else 'No aplica' }}">
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

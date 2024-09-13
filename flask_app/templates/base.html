@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Life Blue{% endblock %}</title>
+    
+    <!--Conexión con funcionalidad del carrusel en javascript-->
+    <script src="{{ url_for('static', filename='js/carousel.js') }}"></script>
+
+    <!--Conexión con Bootstrap y FontAwesome-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    
+    <!--Estilos con CSS-->
+    <style>
+
+        /*Estilos del header*/
+        .header {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #5eb8ff;
+            border-bottom: 1px solid #dee2e6;
+            box-shadow: 0 0 10px 5px rgba(0,0,0,0.2);
+        }
+        .header-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #5eb8ff;
+            min-width: 200px;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            border-top: none;
+            display: none;
+        }
+        .header-menu.active {
+            display: block;
+        }
+        .header-menu h6 {
+            margin: 10px 0;
+            color: white;
+        }
+        .header-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .header-menu ul li {
+            margin-bottom: 5px;
+        }
+        .header-menu ul li a {
+            color: white;
+            text-decoration: none;
+        }
+        .header-menu ul li a:hover {
+            text-decoration: underline;
+        }
+        .header-user {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+        }
+        .header-user-logo {
+            color: white;
+            font-size: 1.5rem;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .header-user-menu {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            z-index: 1000;
+            display: none;
+            background-color: #5eb8ff;
+            min-width: 150px;
+            border: 1px solid rgba(0, 0, 0, .15);
+            border-radius: .25rem;
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+        }
+        .header-user-menu a {
+            display: block;
+            padding: .5rem 1rem;
+            color: white;
+            text-decoration: none;
+        }
+        .header-user-menu a:hover {
+            background-color: #f8f9fa;
+        }
+        .header-btn {
+            color: white !important;
+            font-size: 0.8rem;
+            padding: 5px 10px;
+            text-align: center;
+            text-decoration: none;
+            background-color: transparent;
+            border-radius: 5px;
+        }
+        .header-username {
+            color: white;
+            margin-right: 15px;
+        }
+
+        /*Estilos del index*/
+        .content {
+            display: flex;
+            flex-direction: column;
+            margin: 20px;
+            text-align: center;
+            margin-top: 160px;
+            margin-bottom: 180px;
+        }
+
+        .main-block {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .block {
+            flex: 1;
+            margin-right: 20px;
+        }
+        .block h1{
+            text-align: center;
+        }
+        .block p{
+            text-align: center;
+        }
+        .carousel {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            border-radius: 2%;
+            box-shadow: 0 0 10px 5px rgba(0,0,0,0.2);
+        }
+        .carousel-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .carousel-images img {
+            width: 100%;
+            height: auto;
+            flex-shrink: 0;
+        }
+        .carousel-buttons {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .carousel-button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+        }
+        .line-separator {
+            border-top: 1px solid #dee2e6;
+            margin: 20px 0;
+        }
+        .login-form {
+            text-align: left;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .login-form input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            box-shadow: 0 0 5px 2px rgba(0,0,0,0.1);
+        }
+        .login-form button{
+            box-shadow: 0 0 5px 2px rgba(0,0,0,0.3);
+        }
+        .login-form a {
+            color: blue;
+        }
+        .login-form a:hover {
+            text-decoration: underline;
+        }
+        .icons-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-top: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+            background-color: #f8f9fa;
+            width: 100%;
+        }
+        .icons-bar .icon {
+            text-align: center;
+            flex: 1;
+        }
+        .icons-bar .icon i {
+            font-size: 2rem;
+            color: #007bff; 
+            display: block;
+            margin-bottom: 5px;
+        }
+        .icons-bar .icon p {
+            margin: 0;
+            font-size: 0.9rem; 
+        }
+
+        /*Estilos del footer*/
+        .footer {
+            border-top: 1px solid black;
+            text-align: center;
+            padding: 40px 0 40px 0;
+            box-shadow: 0 0 10px 5px rgba(0,0,0,0.2);;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .content h1 {
+            color: black;
+            margin-bottom: 10px;
+        }
+        .content h2 {
+            color: black;
+        }
+
+        /*Estilos de formularios*/
+        .content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: calc(100vh - 200px); /* Ajusta el espacio entre el formulario y el footer/nav */
+        margin: 0 auto;
+        }
+
+        form {
+        max-width: 600px; /* Ancho máximo del formulario */
+        width: 100%;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: #f8f9fa; /* Color de fondo del formulario */
+        }
+
+        .no-border-form {
+        border: none; /* Eliminar cualquier borde */
+        background-color: transparent; /* Hacer el fondo transparente */
+        box-shadow: none; /* Eliminar sombras */
+        padding: 0; /* Ajustar padding si es necesario */
+        }
+
+        fieldset {
+        border: none;
+        margin-bottom: 20px;
+        }
+
+        legend {
+        font-weight: bold;
+        margin-bottom: 10px;
+        }
+
+        .form-group {
+        margin-bottom: 15px;
+        }
+
+        .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        background-color: #e9ecef; /* Color de fondo de los campos del formulario */
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .invalid-feedback {
+        display: block; 
+        color: #dc3545;  
+        box-shadow: none; 
+        font-size: 1em;
+        }
+
+        .form-control.is_invalid {
+        border-color: #dc3545;
+        border-width: 1px;
+        border-style: solid;
+        }
+
+        .login-form.is_invalid input{
+        border-color: #dc3545;
+        border-width: 1px;
+        border-style: solid;
+        }
+
+        .btn {
+        margin-top: 10px;
+        padding: 10px 20px;
+        }
+
+        .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        }
+
+        .btn-warning {
+        background-color: #ffc107;
+        border-color: #ffc107;
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header row">
+            {% if session.get('user_id') %} <!-- Verifica si el usuario está en sesión -->
+            <!-- Botón del menú principal -->
+            <div class="col-auto">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#mainMenu" aria-expanded="false" aria-controls="mainMenu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            {% endif %}
+
+            <!-- Logo -->
+            <div class="col-auto">
+                <img src="/static/images/logo.png" alt="logo" height="50">
+            </div>
+
+            <!-- Botón 'Sobre nosotros' y 'Contacto' -->
+            <div class="col">
+                <a href="#" class="header-btn">Sobre nosotros</a>
+                <span style="margin-right: 10px;"></span>
+                <a href="#" class="header-btn">Contacto</a>
+            </div>
+
+            {% if session.get('user_id') %} <!-- Verifica si el usuario está en sesión -->
+            <div class="header-menu col-md-auto">
+                <h6>Pacientes</h6>
+                <ul>
+                    <li><a href="#" style="color: white;">Ver paciente</a></li>
+                    <li><a href="#" style="color: white;">Nuevo paciente</a></li>
+                </ul>
+                <h6>Agenda</h6>
+                <ul>
+                    <li><a href="#" style="color: white;">Ver agenda</a></li>
+                    <li><a href="#" style="color: white;">Nueva cita</a></li>
+                </ul>
+                <h6>Documentos</h6>
+                <ul>
+                    <li><a href="#" style="color: white;">Generar documentos</a></li>
+                </ul>
+            </div>
+            {% endif %}
+            
+            <!-- Espacio en el header -->
+            <div class="col"></div>
+
+            {% if session.get('user_id') %} <!-- Verifica si el usuario está en sesión -->
+            <!--Menú de opciones del usuario-->
+            <div class="header-user col-auto">
+                <i class="fas fa-user header-user-logo" id="userMenuBtn"></i>
+                <div class="header-user-menu" id="userMenu">
+                    <a href="{{ url_for('profile') }}">Perfil de usuario</a>
+                    <a href="{{ url_for('logout') }}" class="btn btn-primary">Cerrar sesión</a>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </header>
+
+    <br>
+    <br>
+
+    <div class="container">
+        {% block content %}
+        <!-- Aquí se inserta el contenido de cada página -->
+        {% endblock %}
+    </div>
+
+    <footer class="footer">
+        <a href="#">Aviso legal</a> |
+        <a href="#">Política de privacidad</a> |
+        <a href="#">Condiciones de uso</a> |
+        <a href="#">Mapa de sitio</a>
+    </footer>
+
+
+    <!-- conexiones de bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!--Código de Javascript-->
+    <script>
+        //Mostrar/ocultar el menú de usuario al hacer clic en el icono
+        document.getElementById("userMenuBtn").addEventListener("click", function() {
+            var userMenu = document.getElementById("userMenu");
+            if (userMenu.style.display === "none" || userMenu.style.display === "") {
+                userMenu.style.display = "block";
+            } else {
+                userMenu.style.display = "none";
+            }
+        });
+
+        //Mostrar/ocultar el menú principal al hacer clic en el botón
+        document.querySelector('.btn-primary').addEventListener('click', function () {
+            var mainMenu = document.querySelector('.header-menu');
+            if (mainMenu.style.display === 'none' || mainMenu.style.display === '') {
+                mainMenu.style.display = 'block';
+            } else {
+                mainMenu.style.display = 'none';
+            }
+        });
+
+    </script>
+    
+</body>
+</html>

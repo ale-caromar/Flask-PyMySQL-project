@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Perfil de usuario{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!--Titulo y botones-->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="me-4">Perfil de {{ user.first_name }} {{ user.last_name }}</h2>
+        <div class="d-flex" style="gap: 15px;">
+            <form class="no-border-form" action="/delete_profile" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar tu perfil? Esta acción no se puede deshacer.');">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-warning btn-sm">Regresar</a>
+                <a href="{{ url_for('update_route') }}" class="btn btn-primary btn-sm">Actualizar datos</a>
+                <button type="submit" class="btn btn-danger btn-sm">Eliminar Perfil</button>
+            </form>
+        </div>
+    </div>
+
+    <!--Línea de separación-->
+    <div class="line-separator"></div>
+    
+    <!--La información personal y de contacto del usuario desplegada-->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Información Personal y de contacto</h5>
+            <div class="line-separator"></div>
+            <p><strong>Nombre Completo:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+            <p><strong>Tipo de Documento:</strong> {{ user.docu_type }}</p>
+            <p><strong>Número de Documento:</strong> {{ user.docu_number }}</p>
+            <p><strong>Teléfono:</strong> {{ user.phone }}</p>
+            <p><strong>Dirección:</strong> {{ user.address }}</p>
+        </div>
+    </div>
+    <!--La información profesional del usuario desplegada-->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Información Profesional</h5>
+            <div class="line-separator"></div>
+            <p><strong>Universidad:</strong> {{ user.university }}</p>
+            <p><strong>Número de Tarjeta Profesional:</strong> {{ user.professional_card }}</p>
+            <p><strong>Número de Registro ante Seccional de Salud:</strong> {{ user.professional_reg }}</p>
+            <p><strong>Estudios de Posgrado:</strong> 
+                {% if user.other_degrees %}
+                    {{ user.other_degrees }}
+                {% else %}
+                    Sin registros
+                {% endif %}
+            </p>            
+        </div>
+    </div>  
+</div>
+{% endblock %}
