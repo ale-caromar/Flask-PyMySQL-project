@@ -140,6 +140,8 @@ def update_route():
 # Ruta para actualizar el perfil del usuario, recibe datos del formulario y los guarda
 @app.route('/update_profile', methods=['POST'])
 def update_profile():
+    if 'user_id' not in session:
+        return redirect('/')
 
     # Prepara los datos del formulario para actualizar el perfil del usuario.
     formulario = {

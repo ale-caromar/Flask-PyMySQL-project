@@ -67,14 +67,6 @@ CREATE TABLE IF NOT EXISTS `lifeblue_db`.`patient` (
   `emergency_contact` VARCHAR(50) NULL,
   `emergency_number` VARCHAR(45) NULL,
   `emergency_relationship` VARCHAR(45) NULL,
-  `reason_consult` TEXT NULL,
-  `medication` VARCHAR(100) NULL,
-  `personal_history` TEXT NULL,
-  `familiar_history` TEXT NULL,
-  `personal_area` TEXT NULL,
-  `social_area` TEXT NULL,
-  `familiar_area` TEXT NULL,
-  `occupational_area` TEXT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `person_id` INT NOT NULL,
@@ -153,16 +145,23 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `lifeblue_db`.`evolution`
+-- Table `lifeblue_db`.`history`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `lifeblue_db`.`evolution` (
+CREATE TABLE IF NOT EXISTS `lifeblue_db`.`history` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `observation` TEXT NULL,
+  `reason_consult` TEXT NULL,
+  `medication` VARCHAR(100) NULL,
+  `personal_history` TEXT NULL,
+  `familiar_history` TEXT NULL,
+  `personal_area` TEXT NULL,
+  `social_area` TEXT NULL,
+  `familiar_area` TEXT NULL,
+  `occupational_area` TEXT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_id` INT NOT NULL,
   `patient_id` INT NOT NULL,
-  `appointment_id` INT NOT NULL,
+  'appointment_id' INT NULL, -- Permitir valores nulos
   PRIMARY KEY (`id`),
   INDEX `fk_evolution_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_evolution_patient1_idx` (`patient_id` ASC) VISIBLE,

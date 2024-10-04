@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block title %}Actualizar paciente{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="me-4">Actualizar datos de {{ patient.first_name }} {{ patient.last_name }}</h2>
+        <div class="d-flex" style="gap: 15px;">
+            <a href="{{ url_for('all_patients') }}" class="btn btn-warning btn-sm">Regresar</a>
+        </div>
+    </div>
+
+    <div class="line-separator"></div>
+
+    <!-- Formulario para actualizar el perfil del paciente -->
+    <div class="card mb-4 mx-auto" style="max-width: 600px;">
+        <div class="card-body">
+            <form action="{{ url_for('update_patient_route') }}" method="post">
+                <input type="hidden" name="id" value="{{ patient.id }}">
+                
+                
+                <h5 class="card-title">Información Personal</h5>
+                <div class="line-separator"></div>
+                
+                <div class="mb-3">
+                    <label for="first_name" class="form-label"><strong>Nombre:</strong></label>
+                    <input type="text" name="first_name" class="form-control" value="{{ patient.first_name }}">
+                </div>
+                
+                <div class="mb-3">
+                    <label for="last_name" class="form-label"><strong>Apellido:</strong></label>
+                    <input type="text" name="last_name" class="form-control" value="{{ patient.last_name }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="docu_type" class="form-label"><strong>Tipo de Documento:</strong></label>
+                    <input type="text" name="docu_type" class="form-control" value="{{ patient.docu_type }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="docu_number" class="form-label"><strong>Número de Documento:</strong></label>
+                    <input type="text" name="docu_number" class="form-control" value="{{ patient.docu_number }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="birthdate" class="form-label"><strong>Fecha de Nacimiento:</strong></label>
+                    <input type="date" name="birthdate" class="form-control" value="{{ patient.birthdate }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="birth_place" class="form-label"><strong>Lugar de Nacimiento:</strong></label>
+                    <input type="text" name="birth_place" class="form-control" value="{{ patient.birth_place }}">
+                </div>
+
+                <!-- Estado civil -->
+                <div class="mb-3">
+                    <label for="civil_status"><strong>Estado civil*</strong></label>
+                    <select class="form-control" id="civil_status" name="civil_status">
+                        <option value="none">Seleccionar</option>
+                        <option value="soltero">Soltero</option>
+                        <option value="casado">Casado</option>
+                        <option value="divorciado">Divorciado</option>
+                        <option value="viudo">Viudo</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="occupation" class="form-label"><strong>Ocupación:</strong></label>
+                    <input type="text" name="occupation" class="form-control" value="{{ patient.occupation }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="eps" class="form-label"><strong>EPS:</strong></label>
+                    <input type="text" name="eps" class="form-control" value="{{ patient.eps }}">
+                </div>
+
+                <h5 class="card-title mt-4">Información de Contacto</h5>
+                <div class="line-separator"></div>
+
+                <div class="mb-3">
+                    <label for="phone" class="form-label"><strong>Teléfono:</strong></label>
+                    <input type="text" name="phone" class="form-control" value="{{ patient.phone }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label"><strong>Correo Electrónico:</strong></label>
+                    <input type="email" name="email" class="form-control" value="{{ patient.email }}">
+                </div>
+
+                <!-- Municipio de residencia -->
+                <div class="mb-3">
+                    <label for="residence"><strong>Municipio de Residencia</strong></label>
+                    <input type="text" class="form-control" name="residence" value="{{ patient.residence}}">
+                    </div>    
+
+                <div class="mb-3">
+                    <label for="address" class="form-label"><strong>Dirección:</strong></label>
+                    <input type="text" name="address" class="form-control" value="{{ patient.address }}">
+                </div>
+
+                <h5 class="card-title mt-4">Contacto de Emergencia</h5>
+                <div class="line-separator"></div>
+
+                <div class="mb-3">
+                    <label for="emergency_contact" class="form-label"><strong>Nombre de Contacto Emergencia:</strong></label>
+                    <input type="text" name="emergency_contact" class="form-control" value="{{ patient.emergency_contact }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="emergency_number" class="form-label"><strong>Teléfono de Contacto Emergencia:</strong></label>
+                    <input type="text" name="emergency_number" class="form-control" value="{{ patient.emergency_number }}">
+                </div>
+
+                <div class="mb-3">
+                    <label for="emergency_relationship" class="form-label"><strong>Contacto de emergencia:</strong></label>
+                    <input type="text" name="emergency_relationship" class="form-control" value="{{ patient.emergency_relationship }}">
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

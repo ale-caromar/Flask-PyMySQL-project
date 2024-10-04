@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+
+{% block title %} Registrar paciente {% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="me-4">Abrir historia clínica</h2>
+            <div class="d-flex" style="gap: 15px;">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-warning btn-sm">Regresar</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="line-separator"></div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <!-- Formulario para abrir una historia clínica -->
+            <div class="d-flex justify-content-center">
+                <form action="{{ url_for('open_history') }}" method="POST">
+
+                    <!-- Identificación del paciente-->
+                    <h5 class="card-title">Identificación del paciente</h5>
+                    <h6><strong>*</strong><em style="font-weight: 100"> Campos obligatorios</em></h6>
+                    <div class="line-separator"></div>
+
+                    <!-- Nombre -->
+                    <div class="mb-3">
+                        <label for="first_name"><strong>Nombre(s)*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_first_name']) %}is-invalid{% endif %}" id="first_name" name="first_name">
+                        {% with messages = get_flashed_messages(category_filter=['reg_first_name']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Apellidos -->
+                    <div class="mb-3">
+                        <label for="last_name"><strong>Apellidos*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_last_name']) %} is-invalid {% endif %}" id="last_name" name="last_name">
+                        {% with messages = get_flashed_messages(category_filter=['reg_last_name']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Tipo de documento de identidad -->
+                    <div class="mb-3">
+                        <label for="docu_type"><strong>Tipo de Documento*</strong></label>
+                        <select id="docu_type" name="docu_type" class="form-control {% if get_flashed_messages(category_filter=['reg_docu_type']) %} is-invalid {% endif %}">
+                            <option value="none">Selecciona</option>
+                            <option value="cc">Cédula de ciudadanía</option>
+                            <option value="ce">Cédula de extranjería</option>
+                            <option value="pp">Pasaporte</option>
+                            <option value="ti">Tarjeta de identidad</option>
+                        </select>
+                        {% with messages = get_flashed_messages(category_filter=['reg_docu_type']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Número de documento de identidad -->
+                    <div class="mb-3">
+                        <label for="docu_number"><strong>Número de Documento*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_number']) %} is-invalid {% endif %}" id="docu_number" name="docu_number">
+                        {% with messages = get_flashed_messages(category_filter=['reg_number']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Fecha de nacimiento -->
+                    <div class="mb-3">
+                        <label for="birthdate"><strong>Fecha de Nacimiento*</strong></label>
+                        <input type="date" class="form-control {% if get_flashed_messages(category_filter=['reg_birthdate']) %} is-invalid {% endif %}" id="birthdate" name="birthdate">
+                        {% with messages = get_flashed_messages(category_filter=['reg_birthdate']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Lugar de nacimiento -->
+                    <div class="mb-3">
+                        <label for="birth_place"><strong>Lugar de Nacimiento*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_birth_place']) %} is-invalid {% endif %}" id="birth_place" name="birth_place">
+                        {% with messages = get_flashed_messages(category_filter=['reg_birth_place']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Estado civil -->
+                    <div class="mb-3">
+                        <label for="civil_status"><strong>Estado civil*</strong></label>
+                        <select class="form-control {% if get_flashed_messages(category_filter=['reg_civil_status']) %} is-invalid {% endif %}" id="civil_status" name="civil_status">
+                            <option value="none">Seleccionar</option>
+                            <option value="soltero">Soltero</option>
+                            <option value="casado">Casado</option>
+                            <option value="divorciado">Divorciado</option>
+                            <option value="viudo">Viudo</option>
+                        </select>
+                        {% with messages = get_flashed_messages(category_filter=['reg_civil_status']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Entidad Promotora de Salud (EPS) -->
+                    <div class="mb-3">
+                        <label for="eps"><strong>Entidad Promotora de Salud (EPS)*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_eps']) %} is-invalid {% endif %}" id="eps" name="eps">
+                        {% with messages = get_flashed_messages(category_filter=['reg_eps']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Ocupación -->
+                    <div class="mb-3">
+                        <label for="occupation"><strong>Ocupación*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_occupation']) %} is-invalid {% endif %}" id="occupation" name="occupation">
+                        {% with messages = get_flashed_messages(category_filter=['reg_occupation']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <br>
+
+                    <!-- Información de contacto-->
+                    <h5 class="card-title">Información de contacto</h5>
+                    <div class="line-separator"></div>
+
+                    <!-- Municipio de residencia -->
+                    <div class="mb-3">
+                        <label for="residence"><strong>Municipio de Residencia*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_residence']) %} is-invalid {% endif %}" id="residence" name="residence">
+                        {% with messages = get_flashed_messages(category_filter=['reg_residence']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Dirección de residencia -->
+                    <div class="mb-3">
+                        <label for="address"><strong>Dirección de Residencia*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_address']) %} is-invalid {% endif %}" id="address" name="address">
+                        {% with messages = get_flashed_messages(category_filter=['reg_address']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Teléfono -->
+                    <div class="mb-3">
+                        <label for="phone"><strong>Teléfono*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_phone']) %} is-invalid {% endif %}" id="phone" name="phone">
+                        {% with messages = get_flashed_messages(category_filter=['reg_phone']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Correo electrónico -->
+                    <div class="mb-3">
+                        <label for="email"><strong>Correo Electrónico*</strong></label>
+                        <input type="email" class="form-control {% if get_flashed_messages(category_filter=['reg_email']) %} is-invalid {% endif %}" id="email" name="email">
+                        {% with messages = get_flashed_messages(category_filter=['reg_email']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <br>
+
+                    <!-- Información de contacto de emergencia-->
+                    <h5 class="card-title">Contacto de emergencia*</h5>
+                    <div class="line-separator"></div>
+
+                    <!-- Nombre del contacto de emergencia -->
+                    <div class="mb-3">
+                        <label for="emergency_contact"><strong>Nombre*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_emergency_contact']) %} is-invalid {% endif %}" id="emergency_contact" name="emergency_contact">
+                        {% with messages = get_flashed_messages(category_filter=['reg_emergency_contact']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Número del contacto de emergencia -->
+                    <div class="mb-3">
+                        <label for="emergency_number"><strong>Teléfono*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_emergency_number']) %} is-invalid {% endif %}" id="emergency_number" name="emergency_number">
+                        {% with messages = get_flashed_messages(category_filter=['reg_emergency_number']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+
+                    <!-- Parentesco del contacto de emergencia -->
+                    <div class="mb-3">
+                        <label for="emergency_relationship"><strong>Parentesco*</strong></label>
+                        <input type="text" class="form-control {% if get_flashed_messages(category_filter=['reg_emergency_relationship']) %} is-invalid {% endif %}" id="emergency_relationship" name="emergency_relationship">
+                        {% with messages = get_flashed_messages(category_filter=['reg_emergency_relationship']) %}
+                            {% if messages %}
+                                <div class="invalid-feedback">
+                                    {% for message in messages %}
+                                        <p>{{ message }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        {% endwith %}
+                    </div>
+                    <br>
+
+                    <!--Antecedentes médicos-->
+                    <h5 class="card-title">Antecedentes médicos</h5>
+                    <div class="line-separator"></div>
+
+                    <!-- Información sobre Medicamentos -->
+                    <div class="mb-3">
+                        <label><strong>¿El paciente consume medicamentos de forma habitual?</strong></label><br>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="medication_yes" name="medication" value="yes" class="form-check-input" onclick="toggleMedicationField(true)">
+                            <label for="medication_yes" class="form-check-label">Sí</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="medication_no" name="medication" value="no" class="form-check-input" onclick="toggleMedicationField(false)">
+                            <label for="medication_no" class="form-check-label">No</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3" id="medication_field" style="display: none;">
+                        <label for="medications" class="form-label"><strong>¿Cuáles?</strong></label>
+                        <input type="text" class="form-control" id="medication" name="medication">
+                    </div>
+
+                    <!-- Antecedentes personales -->
+                    <div class="mb-3">
+                        <label for="personal_history"><strong>Antecedentes personales</strong></label>
+                        <textarea class="form-control" name="personal_history" rows="3"></textarea>
+                    </div>
+
+                    <!-- Antecedentes familiares -->
+                    <div class="mb-3">
+                        <label for="familiar_history"><strong>Antecedentes familiares</strong></label>
+                        <textarea class="form-control" name="familiar_history" rows="3"></textarea>
+                    </div>
+                    <br>
+
+                    <!--Antecedentes médicos-->
+                    <h5 class="card-title">Informe clínico</h5>
+                    <div class="line-separator"></div>
+
+                    <!-- Motivo de Consulta -->
+                    <div class="mb-3">
+                        <label for="reason_consult"><strong>Motivo de Consulta</strong></label>
+                        <textarea class="form-control" id="reason_consult" name="reason_consult" rows="3"></textarea>
+                    </div>
+
+                    <!-- Área Personal -->
+                    <div class="mb-3">
+                        <label for="personal_area"><strong>Área Personal</strong></label>
+                        <textarea class="form-control" id="personal_area" name="personal_area" rows="3"></textarea>
+                    </div>
+
+                    <!-- Área Social -->
+                    <div class="mb-3">
+                        <label for="social_area"><strong>Área Social</strong></label>
+                        <textarea class="form-control" id="social_area" name="social_area" rows="3"></textarea>
+                    </div>
+
+                    <!-- Área Familiar -->
+                    <div class="mb-3">
+                        <label for="familiar_area"><strong>Área Familiar</strong></label>
+                        <textarea class="form-control" id="familiar_area" name="familiar_area" rows="3"></textarea>
+                    </div>
+
+                    <!-- Área Ocupacional -->
+                    <div class="mb-3">
+                        <label for="occupational_area"><strong>Área Ocupacional</strong></label>
+                        <textarea class="form-control" id="occupational_area" name="occupational_area" rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleMedicationField(show) {
+        const medicationField = document.getElementById('medication_field');
+        medicationField.style.display = show ? 'block' : 'none';
+    }
+</script>
+
+{% endblock %}

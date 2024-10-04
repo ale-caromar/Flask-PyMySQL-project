@@ -319,6 +319,37 @@
         border-color: #ffc107;
         }
 
+        /*Estilos de la lista de pacientes*/
+            /* Estilos para la lista de información registrada */
+    .info-list {
+        padding-left: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .info-list ol {
+        list-style-position: inside;
+        padding: 0;
+    }
+
+    .info-list ol li {
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #e9ecef;
+        border: 1px solid #ced4da;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .info-list ol li span {
+        font-weight: bold;
+        color: #495057;
+    }
+
     </style>
 </head>
 
@@ -350,8 +381,8 @@
             <div class="header-menu col-md-auto">
                 <h6>Pacientes</h6>
                 <ul>
-                    <li><a href="#" style="color: white;">Ver paciente</a></li>
-                    <li><a href="#" style="color: white;">Nuevo paciente</a></li>
+                    <li><a href="{{ url_for('all_patients') }}" style="color: white;">Ver todos</a></li>
+                    <li><a href="{{ url_for('patient_register')}}" style="color: white;">Nueva historia clínica</a></li>
                 </ul>
                 <h6>Agenda</h6>
                 <ul>

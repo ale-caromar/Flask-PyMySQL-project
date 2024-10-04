@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Historia clínica{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Titulo y botones -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="me-4">Historia clínica de {{ patient.first_name }} {{patient.last_name}}</h2>
+        <div class="d-flex" style="gap: 15px;">
+            <form class="no-border-form" action="/delete_patient" method="POST" onsubmit="return confirm('Si haces clic en aceptar no podrás recuperar la Información. ¿Deseas continuar? Ten en cuenta que la historia clínica se debe conservar por 15 años.');">
+                <a href="{{ url_for('all_patients') }}" class="btn btn-warning btn-sm">Regresar</a>
+                <button type="submit" class="btn btn-danger btn-sm">Borrar registros</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Línea de separación -->
+    <div class="line-separator"></div>
+
+    <!-- Información personal del paciente -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Información Personal</h5>
+            <div class="line-separator"></div>
+            <p><strong>Nombre Completo: {{ patient.first_name }} {{ patient.last_name }}</strong> </p>
+            <p><strong>Tipo de Documento:</strong> {{ patient.docu_type }}</p>
+            <p><strong>Número de Documento:</strong> {{ patient.docu_number }}</p>
+            <p><strong>Ocupación:</strong> {{ patient.occupation }}</p>
+            <p><strong>Fecha de Nacimiento:</strong> {{ patient.birthdate }}</p>
+            <p><strong>Lugar de Nacimiento:</strong> {{ patient.birth_place }}</p>
+            <p><strong>Estado Civil:</strong> {{ patient.civil_status }}</p>
+            <p><strong>EPS:</strong> {{ patient.eps }}</p>
+        </div>
+    </div>
+
+    <!-- Información de contacto y contacto de emergencia del paciente -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Información de Contacto</h5>
+            <div class="line-separator"></div>
+            <p><strong>Teléfono:</strong> {{ patient.phone }}</p>
+            <p><strong>Dirección:</strong> {{ patient.address }}</p>
+            <p><strong>Correo Electrónico:</strong> {{ patient.email }}</p>
+            <p><strong>Residencia:</strong> {{ patient.residence }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Contacto de Emergencia</h5>
+            <div class="line-separator"></div>
+            <p><strong>Nombre:</strong> {{ patient.emergency_contact }}</p>
+            <p><strong>Teléfono:</strong> {{ patient.emergency_number }}</p>
+            <p><strong>Relación:</strong> {{ patient.emergency_relationship }}</p>
+        </div>
+    </div>
+
+    <!-- Antecedentes médicos del paciente -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <!-- Título del recuadro principal -->
+            <div class="d-flex justify-content-between">
+                <h5 class="card-title">Antecedentes Médicos</h5> 
+            </div>
+            <div class="line-separator"></div>
+            <!-- Div que crea el rectángulo más pequeño dentro del card -->
+            <div class="p-3 bg-light border rounded mt-3">
+                {% if histories %}
+                    {% for history in histories %}
+                        <div class="d-flex justify-content-between">
+                            <h6 class="card-subtitle mb-2 text-muted">Registro de antecedentes</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                Fecha y hora de registro: {{ history.created_at.strftime('%d-%m-%Y %H:%M:%S') }}
+                            </h6>
+                        </div>
+                        <div class="line-separator mb-2"></div>
+                        <p><strong>Medicamentos:</strong>
+                            {% if patient.medication %}
+                                {{ user.other_degrees }}
+                            {% else %}
+                                No se han registrado medicamentos
+                            {% endif %}
+                        </p>
+                        <p><strong>Antecedentes Personales:</strong> {{ history.personal_history }}</p>
+                        <p><strong>Antecedentes Familiares:</strong> {{ history.familiar_history }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p>No hay antecedentes médicos registrados para este paciente.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Informe clínico del paciente -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <!-- Título del recuadro principal -->
+            <div class="d-flex justify-content-between">
+                <h5 class="card-title">Informe clínico</h5> 
+            </div>
+            <div class="line-separator"></div>
+
+            <!-- Div que crea el rectángulo más pequeño dentro del card -->
+            <div class="p-3 bg-light border rounded mt-3">
+                {% if histories %}
+                    {% for history in histories %}
+                        <div class="d-flex justify-content-between">
+                            <h6 class="card-subtitle mb-2 text-muted">Evolución clínica</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">Fecha y hora de registro: {{ history.created_at.strftime('%d-%m-%Y %H:%M:%S') }}</h6>
+                        </div>
+                        <div class="line-separator"></div>
+                        <p><strong>Motivo de Consulta:</strong> {{ history.reason_consult }}</p>
+                        <p><strong>Área Personal:</strong> {{ history.personal_area }}</p>
+                        <p><strong>Área Social:</strong> {{ history.social_area }}</p>
+                        <p><strong>Área Familiar:</strong> {{ history.familiar_area }}</p>
+                        <p><strong>Área Ocupacional:</strong> {{ history.occupational_area }} </p>
+                    {% endfor %}
+                {% else %}
+                    <h6 class="card-title">No hay registros clínicos de este paciente.</h6>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
+
