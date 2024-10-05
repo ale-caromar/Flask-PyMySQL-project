@@ -161,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `lifeblue_db`.`history` (
   `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `user_id` INT NOT NULL,
   `patient_id` INT NOT NULL,
-  'appointment_id' INT NULL, -- Permitir valores nulos
+  `appointment_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_evolution_user1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_evolution_patient1_idx` (`patient_id` ASC) VISIBLE,

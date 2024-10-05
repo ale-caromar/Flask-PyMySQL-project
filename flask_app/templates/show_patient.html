@@ -6,7 +6,7 @@
 <div class="container mt-5">
     <!-- Barra superior -->
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="me-4">Historia clínica de {{ patient.first_name }} {{patient.last_name}}</h2>
+        <h2 class="me-4">Paciente {{ patient.first_name }} {{patient.last_name}}</h2>
         <div class="d-flex" style="gap: 15px;">
             <form class="no-border-form" action="/delete_patient" method="POST" onsubmit="return confirm('Si haces clic en aceptar no podrás recuperar la Información. ¿Deseas continuar? Ten en cuenta que la historia clínica se debe conservar por 15 años.');">
                 <a href="{{ url_for('all_patients') }}" class="btn btn-success btn-sm">
@@ -27,7 +27,7 @@
         <div class="card-body">
             <h5 class="card-title">Información Personal</h5>
             <div class="line-separator"></div>
-            <p><strong>Nombre Completo: {{ patient.first_name }} {{ patient.last_name }}</strong> </p>
+            <p><strong>Nombre Completo:</strong> {{ patient.first_name }} {{ patient.last_name }} </p>
             <p><strong>Tipo de Documento:</strong> {{ patient.docu_type }}</p>
             <p><strong>Número de Documento:</strong> {{ patient.docu_number }}</p>
             <p><strong>Ocupación:</strong> {{ patient.occupation }}</p>

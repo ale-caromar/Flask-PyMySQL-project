@@ -4,15 +4,12 @@
 
 {% block content %}
     
-
 <!-- Contenedor principal con el logo -->
-    <div class="main-container">
-                <div class="logo-container">
-                    <div class="logo">Tu Logo</div>
-                    <h1>Bienvenido, {{ user.profession }} {{ user.first_name }} {{ user.last_name }}</h1>
-                    <h2></h2>
-                </div>
+<div class="main-container">
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Tu Logo" class="logo">
+        <h1>Bienvenido, {{ user.profession }} {{ user.first_name }} {{ user.last_name }}</h1>
     </div>
-
+</div>
 
 {% endblock %}

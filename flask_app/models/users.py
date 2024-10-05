@@ -188,17 +188,30 @@ class User(Person):
     # Método de clase para eliminar un perfil de usuario
     @classmethod
     def delete_profile(cls, formulario):
-        #Elimina el registro de la tabla user que está vinculado al ID de person.
+        # Primero elimina los registros relacionados en la tabla `history`.
+        history_query = """
+            DELETE FROM history 
+            WHERE user_id = (SELECT id FROM user WHERE person_id = %(person_id)s);
+        """
+        connectToMySQL('lifeblue_db').query_db(history_query, formulario)
+
+        # Luego elimina los registros relacionados en la tabla `patient`.
+        patient_query = """
+            DELETE FROM patient
+            WHERE user_id = (SELECT id FROM user WHERE person_id = %(person_id)s);
+        """
+        connectToMySQL('lifeblue_db').query_db(patient_query, formulario)
+
+        # Después elimina el registro en la tabla `user`.
         user_query = "DELETE FROM user WHERE person_id = %(person_id)s;"
         connectToMySQL('lifeblue_db').query_db(user_query, formulario)
 
-        #Elimina el registro de la tabla `person` utilizando el mismo `person_id`.
+        # Finalmente, elimina el registro en la tabla `person`.
         person_query = "DELETE FROM person WHERE id = %(person_id)s;"
         connectToMySQL('lifeblue_db').query_db(person_query, formulario)
 
         # Retorna True para indicar que la operación fue exitosa
         return True
-
 
 
         

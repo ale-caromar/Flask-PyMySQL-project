@@ -179,7 +179,7 @@ def delete_profile():
     User.delete_profile(formulario)
     
     session.clear()  #Se limpia la sesión tras eliminar el perfil
-    flash("Perfil eliminado correctamente", "success") #Mensaje que confirma que el proceso fue exitoso
+    
     return redirect('/') #Redirige a la página principal
 
 
