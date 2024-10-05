@@ -8,7 +8,9 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="me-4">Actualizar datos de {{ patient.first_name }} {{ patient.last_name }}</h2>
         <div class="d-flex" style="gap: 15px;">
-            <a href="{{ url_for('all_patients') }}" class="btn btn-warning btn-sm">Regresar</a>
+            <a href="{{ url_for('all_patients') }}" class="btn btn-success btn-sm">
+                <img src="{{ url_for('static', filename='images/back.png') }}" style="width:20px;height:20px;">
+            </a>
         </div>
     </div>
 
@@ -20,7 +22,7 @@
             <form action="{{ url_for('update_patient_route') }}" method="post">
                 <input type="hidden" name="id" value="{{ patient.id }}">
                 
-                
+                <!-- Información personal del paciente-->
                 <h5 class="card-title">Información Personal</h5>
                 <div class="line-separator"></div>
                 
@@ -54,11 +56,9 @@
                     <input type="text" name="birth_place" class="form-control" value="{{ patient.birth_place }}">
                 </div>
 
-                <!-- Estado civil -->
                 <div class="mb-3">
-                    <label for="civil_status"><strong>Estado civil*</strong></label>
+                    <label for="civil_status"><strong>Estado civil</strong></label>
                     <select class="form-control" id="civil_status" name="civil_status">
-                        <option value="none">Seleccionar</option>
                         <option value="soltero">Soltero</option>
                         <option value="casado">Casado</option>
                         <option value="divorciado">Divorciado</option>
@@ -76,6 +76,7 @@
                     <input type="text" name="eps" class="form-control" value="{{ patient.eps }}">
                 </div>
 
+                <!--Información de contacto-->
                 <h5 class="card-title mt-4">Información de Contacto</h5>
                 <div class="line-separator"></div>
 
@@ -89,7 +90,6 @@
                     <input type="email" name="email" class="form-control" value="{{ patient.email }}">
                 </div>
 
-                <!-- Municipio de residencia -->
                 <div class="mb-3">
                     <label for="residence"><strong>Municipio de Residencia</strong></label>
                     <input type="text" class="form-control" name="residence" value="{{ patient.residence}}">
@@ -100,6 +100,7 @@
                     <input type="text" name="address" class="form-control" value="{{ patient.address }}">
                 </div>
 
+                <!--Información del contacto de emergencia-->
                 <h5 class="card-title mt-4">Contacto de Emergencia</h5>
                 <div class="line-separator"></div>
 
