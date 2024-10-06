@@ -136,8 +136,33 @@ class User(Person):
     def verify_email(cls, formulario):
         # Esta consulta realiza un JOIN entre las tablas person y user para encontrar el correo electrónico ingresado
         query = "SELECT person.*, user.* FROM person INNER JOIN user ON person.id = user.person_id WHERE person.email = %(email)s;"
+        
+        query = """
+                SELECT
+                    u.id,
+                    p.id AS person_id,
+                    p.first_name,
+                    p.last_name,
+                    p.email,
+                    p.docu_type,
+                    p.docu_number,
+                    p.phone,
+                    p.address,
+                    u.university,
+                    u.professional_card,
+                    u.professional_reg,
+                    u.other_degrees,
+                    u.password,
+                    u.created_at,
+                    u.updated_at 
+                FROM person p
+                JOIN user u ON p.id = u.person_id
+                WHERE p.email = %(email)s;
+            """
+        
         # Ejecuta la consulta utilizando el formulario proporcionado
         result = connectToMySQL('lifeblue_db').query_db(query, formulario)
+        print(result)  # Esto te ayudará a verificar si 'docu_type' está presente
 
         # Si no se encuentra el correo electrónico, se retorna False.
         if len(result) < 1:
@@ -163,13 +188,13 @@ class User(Person):
 
     # Método de clase para actualizar un usuario en la base de datos
     @classmethod
-    def update_user(cls, formulario):
+    def update_user(cls, user_id, formulario):
         # Esta consulta actualiza tanto los datos de la persona como del usuario en las tablas person y user
-        # Usa un JOIN para actualizar ambos registros a la vez, vinculado por el person_id
         query = """
             UPDATE person
             JOIN user ON person.id = user.person_id
-            SET person.first_name = %(first_name)s,
+            SET 
+                person.first_name = %(first_name)s,
                 person.last_name = %(last_name)s,
                 person.email = %(email)s,
                 person.phone = %(phone)s,
@@ -178,9 +203,13 @@ class User(Person):
                 user.professional_card = %(professional_card)s,
                 user.professional_reg = %(professional_reg)s,
                 user.other_degrees = %(other_degrees)s
-            WHERE user.id = %(id)s;
+            WHERE user.id = %(id)s;  
         """
-         # Ejecuta la query para actualizar los datos en las tablas person y user
+        
+        # Añadir el user_id al formulario para su uso en la consulta
+        formulario["id"] = user_id
+        
+        # Ejecuta la query para actualizar los datos en las tablas person y user
         result = connectToMySQL('lifeblue_db').query_db(query, formulario)
         return result
     
@@ -191,27 +220,20 @@ class User(Person):
         # Primero elimina los registros relacionados en la tabla `history`.
         history_query = """
             DELETE FROM history 
-            WHERE user_id = (SELECT id FROM user WHERE person_id = %(person_id)s);
+            WHERE user_id = %(user_id)s;  
         """
         connectToMySQL('lifeblue_db').query_db(history_query, formulario)
 
         # Luego elimina los registros relacionados en la tabla `patient`.
         patient_query = """
             DELETE FROM patient
-            WHERE user_id = (SELECT id FROM user WHERE person_id = %(person_id)s);
+            WHERE user_id = %(user_id)s;  
         """
         connectToMySQL('lifeblue_db').query_db(patient_query, formulario)
 
         # Después elimina el registro en la tabla `user`.
-        user_query = "DELETE FROM user WHERE person_id = %(person_id)s;"
+        user_query = "DELETE FROM user WHERE id = %(user_id)s;"  # Asegúrate de usar el ID de usuario
         connectToMySQL('lifeblue_db').query_db(user_query, formulario)
-
-        # Finalmente, elimina el registro en la tabla `person`.
-        person_query = "DELETE FROM person WHERE id = %(person_id)s;"
-        connectToMySQL('lifeblue_db').query_db(person_query, formulario)
 
         # Retorna True para indicar que la operación fue exitosa
         return True
-
-
-        

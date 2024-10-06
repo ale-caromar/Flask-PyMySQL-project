@@ -1,6 +1,0 @@
-Aprendiz Maria Alejandra Caro Martínez
-Ficha 2721468
-
-GITHUB:
-https://github.com/ale-caromar/Flask-PyMySQL-project
-

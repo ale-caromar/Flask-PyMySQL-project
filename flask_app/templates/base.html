@@ -349,31 +349,36 @@
         font-weight: bold;
         color: #495057;
     }
+    
+/* Estilos del dashboard */
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - /* altura del nav */ - /* altura del footer */);
+    margin-bottom: 20px; /* Espacio adicional, ajustable */
+    width: 80%; /* Ajusta el ancho del contenedor principal */
+    max-width: 1200px; /* Ancho máximo, ajustable */
+    margin-left: auto; /* Centra el contenedor horizontalmente */
+    margin-right: auto; /* Centra el contenedor horizontalmente */
+}
 
-    /*Estilos del dashboard*/
-        .main-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: calc(100vh - /* altura del nav */ - /* altura del footer */);
-        margin-bottom: 20px; /* Espacio adicional, ajustable */
-    }
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px; /* Espacio inferior para separación */
+}
 
-    .logo-container {
-        text-align: center;
-        margin-bottom: 20px; /* Espacio inferior para separación */
-    }
+.logo {
+    max-width: 240px; /* Ajusta el tamaño máximo del logo */
+    height: auto; /* Mantiene la proporción del logo */
+}
 
-    .logo {
-        max-width: 240px; /* Ajusta el tamaño máximo del logo */
-        height: auto; /* Mantiene la proporción del logo */
-    }
+h1 {
+    font-size: 2.5rem; /* Ajusta el tamaño de fuente del encabezado */
+    margin-top: 10px; /* Espacio entre el logo y el encabezado */
+}
 
-    h1 {
-        font-size: 2.5rem; /* Ajusta el tamaño de fuente del encabezado */
-        margin-top: 10px; /* Espacio entre el logo y el encabezado */
-    }
 
 
     </style>

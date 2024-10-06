@@ -137,15 +137,17 @@ def update_route():
     return render_template('update.html', user=user)  # Pasa el usuario al template
     
     
+
 # Ruta para actualizar el perfil del usuario, recibe datos del formulario y los guarda
 @app.route('/update_profile', methods=['POST'])
 def update_profile():
     if 'user_id' not in session:
         return redirect('/')
 
+    user_id = session['user_id']  # Asegúrate de obtener el ID del usuario de la sesión
+
     # Prepara los datos del formulario para actualizar el perfil del usuario.
     formulario = {
-        "id": request.form['id'],
         "first_name": request.form['first_name'],
         "last_name": request.form['last_name'],
         "email": request.form['email'],
@@ -157,12 +159,13 @@ def update_profile():
         "other_degrees": request.form['other_degrees']
     }
 
-    # Actualiza la información del usuario en la base de datos a traves del método update_user
-    User.update_user(formulario)
+    # Actualiza la información del usuario en la base de datos a través del método update_user
+    User.update_user(user_id, formulario)
     
     # Muestra un mensaje de éxito y redirige al perfil del usuario.
     flash('Perfil actualizado exitosamente', 'profile_update')
     return redirect('profile')
+
 
 
 # Ruta para eliminar el perfil del usuario en sesión.
@@ -172,15 +175,15 @@ def delete_profile():
         return redirect('/')
     
     formulario = {
-        'person_id': session['user_id']  # Usamos el id de `person` almacenado en la sesión
+        'user_id': session['user_id']  # Usamos el id de `user` almacenado en la sesión
     }
     
-     # Elimina el perfil del usuario en la base de datos usando el metodo delete_profile
+    # Elimina el perfil del usuario en la base de datos usando el método delete_profile
     User.delete_profile(formulario)
     
-    session.clear()  #Se limpia la sesión tras eliminar el perfil
+    session.clear()  # Se limpia la sesión tras eliminar el perfil
     
-    return redirect('/') #Redirige a la página principal
+    return redirect('/')  # Redirige a la página principal
 
 
 #Ruta para cerrar la sesión del usuario.
@@ -188,6 +191,3 @@ def delete_profile():
 def logout():
     session.clear() # Limpia la sesión y redirige a la página de inicio.
     return redirect('/') #Redirige a la página principal.
-
-
-
