@@ -9,16 +9,15 @@
         <h2 class="me-4">Paciente {{ patient.first_name }} {{patient.last_name}}</h2>
         <div class="d-flex" style="gap: 15px;">
             <form class="no-border-form" action="/delete_patient" method="POST" onsubmit="return confirm('Si haces clic en aceptar no podrás recuperar la Información. ¿Deseas continuar? Ten en cuenta que la historia clínica se debe conservar por 15 años.');">
-                <a href="{{ url_for('all_patients') }}" class="btn btn-success btn-sm">
-                    <img src="{{ url_for('static', filename='images/back.png') }}" style="width:20px;height:20px;">
+                <a href="{{ url_for('all_patients') }}" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Regresar">
+                    <i class="fas fa-arrow-left"></i>
                 </a>
-                <button type="submit" class="btn btn-danger btn-sm">
-                    <img src="{{ url_for('static', filename='images/delete.png') }}" style="width:20px;height:20px;">
+                <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Eliminar paciente">
+                    <i class="fas fa-trash"></i>
                 </button>
             </form>
         </div>
     </div>
-
     <!-- Línea de separación -->
     <div class="line-separator"></div>
 
@@ -61,4 +60,51 @@
         </div>
     </div>
 
+    <!-- Información personal del paciente -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Seguimiento clínico</h5>
+            <div class="line-separator"></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Motivo de Consulta</th>
+                        <th>Medicamentos</th>
+                        <th>Antecedentes Personales</th>
+                        <th>Área Personal</th>
+                        <th>Área Social</th>
+                        <th>Área Familiar</th>
+                        <th>Área Ocupacional</th>
+                        <th>Fecha de Creación </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if histories %}
+                        {% for history in histories %}
+                        <tr>
+                            <td>{{ history.reason_consult }}</td>
+                            <td>{{ history.medication }}</td>
+                            <td>{{ history.personal_history }}</td>
+                            <td>{{ history.personal_area }}</td>
+                            <td>{{ history.social_area }}</td>
+                            <td>{{ history.familiar_area }}</td>
+                            <td>{{ history.occupational_area }}</td>
+                            <td>{{ history.history_created_at }}</td> 
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <td>Sin registro</td>
+                        <td>Sin registro</td>
+                        <td>Sin registro</td>
+                        <td>Sin registro</td>
+                        <td>Sin registro</td>
+                        <td>Sin registro</td>
+                        <td>Sin registro</td>
+                        <td>Sin registro</td>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 {% endblock %}

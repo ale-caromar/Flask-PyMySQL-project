@@ -11,6 +11,7 @@
     <!--Conexión con Bootstrap y FontAwesome-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     
     <!--Estilos con CSS-->
     <style>
@@ -102,8 +103,12 @@
         }
         .header-username {
             color: white;
-            margin-right: 15px;
+            margin-left: 10px; 
+            margin-right: 15px; 
+            font-size: 1.2rem; 
+            line-height: 1.5; 
         }
+
 
         /*Estilos del index*/
         .content {
@@ -245,7 +250,7 @@
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        background-color: #f8f9fa; /* Color de fondo del formulario */
+        background-color: #f8f9fa; 
         }
 
         .no-border-form {
@@ -320,8 +325,7 @@
         }
 
         /*Estilos de la lista de pacientes*/
-            /* Estilos para la lista de información registrada */
-    .info-list {
+        .info-list {
         padding-left: 20px;
         max-width: 600px;
         margin: 0 auto;
@@ -329,57 +333,144 @@
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         padding: 20px;
-    }
+        }
 
-    .info-list ol {
-        list-style-position: inside;
-        padding: 0;
-    }
+        .info-list ol {
+            list-style-position: inside;
+            padding: 0;
+        }
 
-    .info-list ol li {
-        margin-bottom: 10px;
-        padding: 10px;
-        border-radius: 5px;
-        background-color: #e9ecef;
-        border: 1px solid #ced4da;
-        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-    }
+        .info-list ol li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e9ecef;
+            border: 1px solid #ced4da;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
 
-    .info-list ol li span {
-        font-weight: bold;
-        color: #495057;
-    }
-    
-/* Estilos del dashboard */
-.main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: calc(100vh - /* altura del nav */ - /* altura del footer */);
-    margin-bottom: 20px; /* Espacio adicional, ajustable */
-    width: 80%; /* Ajusta el ancho del contenedor principal */
-    max-width: 1200px; /* Ancho máximo, ajustable */
-    margin-left: auto; /* Centra el contenedor horizontalmente */
-    margin-right: auto; /* Centra el contenedor horizontalmente */
-}
+        .info-list ol li span {
+            font-weight: bold;
+            color: #495057;
+        }
+        
+        /* Estilos del dashboard */
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px; 
+            width: 80%; 
+            max-width: 1200px; 
+            margin-left: auto; 
+            margin-right: auto; 
+        }
 
-.logo-container {
-    text-align: center;
-    margin-bottom: 20px; /* Espacio inferior para separación */
-}
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px; 
+        }
 
-.logo {
-    max-width: 240px; /* Ajusta el tamaño máximo del logo */
-    height: auto; /* Mantiene la proporción del logo */
-}
+        .logo {
+            max-width: 240px; 
+            height: auto; 
+        }
 
-h1 {
-    font-size: 2.5rem; /* Ajusta el tamaño de fuente del encabezado */
-    margin-top: 10px; /* Espacio entre el logo y el encabezado */
-}
+        h1 {
+            font-size: 2.5rem; 
+            margin-top: 10px; 
+        }
 
+        .welcome-message {
+        background-color: #f0f8ff;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        animation: fadeIn 2s ease-in-out;
+        margin-bottom: 20px;
+        }
 
+        .welcome-icons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .icon {
+            text-align: center;
+            font-size: 24px;
+            color: #007bff;
+        }
+
+        .icon p {
+            margin-top: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /*Agenda*/
+
+        input[type="date"],
+        input[type="time"] {
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 100%;
+        }
+
+        input[type="date"]:focus,
+        input[type="time"]:focus {
+            border-color: #80bdff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+
+        /* Calendario de citas */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 15px; 
+        }
+
+        .calendar-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: #f8f9fa; 
+            transition: transform 0.2s;
+            min-height: 250px; 
+        }
+
+        .calendar-item.bg-success {
+            background-color: #6ad482 !important; /* Verde para confirmadas */
+        }
+
+        .calendar-item.bg-danger {
+            background-color: #fa5565 !important; /* Rojo para canceladas */
+        }
+
+        .calendar-item.bg-secondary {
+            background-color: #9fabb5 !important; /* Gris para realizadas */
+        }
+
+        .calendar-item:hover {
+            transform: translateY(-5px); 
+        }
+
+        .calendar-item .btn {
+            margin-bottom: 10px; 
+        }
 
     </style>
 </head>
@@ -388,9 +479,8 @@ h1 {
     <header>
         <div class="header row">
             {% if session.get('user_id') %} <!-- Verifica si el usuario está en sesión -->
-            <!-- Botón del menú principal -->
             <div class="col-auto">
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#mainMenu" aria-expanded="false" aria-controls="mainMenu">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#mainMenu" aria-expanded="false" aria-controls="mainMenu" data-bs-toggle="tooltip" title="Menú principal">
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
@@ -398,7 +488,9 @@ h1 {
 
             <!-- Logo -->
             <div class="col-auto">
-                <img src="/static/images/logo.png" alt="logo" height="50">
+                <a href="{{ url_for('dashboard') }}"> 
+                    <img src="/static/images/logo.png" alt="logo" height="50">
+                </a>
             </div>
 
             <!-- Botón 'Sobre nosotros' y 'Contacto' -->
@@ -417,8 +509,8 @@ h1 {
                 </ul>
                 <h6>Agenda</h6>
                 <ul>
-                    <li><a href="#" style="color: white;">Ver agenda</a></li>
-                    <li><a href="#" style="color: white;">Nueva cita</a></li>
+                    <li><a href="{{ url_for('view_appointments') }}" style="color: white;">Ver agenda</a></li>
+                    <li><a href="{{ url_for('schedule') }}" style="color: white;">Nueva cita</a></li>
                 </ul>
                 <h6>Documentos</h6>
                 <ul>
@@ -433,7 +525,13 @@ h1 {
             {% if session.get('user_id') %} <!-- Verifica si el usuario está en sesión -->
             <!--Menú de opciones del usuario-->
             <div class="header-user col-auto">
-                <i class="fas fa-user header-user-logo" id="userMenuBtn"></i>
+                <i class="fas fa-user header-user-logo" id="userMenuBtn" data-bs-toggle="tooltip" title="Menú de usuario"></i>
+                <h5 class="header-username">
+                    {% if user %}
+                        {{ user.first_name }}
+                    {% endif %}
+                    
+                </h5>
                 <div class="header-user-menu" id="userMenu">
                     <a href="{{ url_for('profile') }}">Perfil de usuario</a>
                     <a href="{{ url_for('logout') }}" class="btn btn-primary">Cerrar sesión</a>
@@ -486,6 +584,11 @@ h1 {
                 mainMenu.style.display = 'none';
             }
         });
+
+        $(document).ready(function() {
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+
 
     </script>
     

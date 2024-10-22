@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Agendar Cita{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="me-4">Agendar Cita</h2>
+        <div class="d-flex" style="gap: 15px;">
+            <a href="{{ url_for('view_appointments') }}" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Regresar">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="line-separator"></div>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-center">
+                <form action="/new_appointment" method="post" style="max-width: 600px; width: 100%;">
+
+                    <div class="mb-3">
+                        <label for="patient_id" class="form-label"><strong>Paciente:</strong></label>
+                        <select id="patient_id" name="patient_id" class="form-control">
+                            <option value="">Selecciona un paciente</option>
+                            {% for patient in patients %}
+                                <option value="{{ patient.id }}">{{ patient.first_name }} {{ patient.last_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="date" class="form-label"><strong>Fecha:</strong></label>
+                        <input type="date" class="form-control" id="date" name="date">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="hour" class="form-label"><strong>Hora:</strong></label>
+                        <input type="time" class="form-control" id="hour" name="hour">
+                    </div>                    
+
+                    <div class="mb-3">
+                        <label for="place" class="form-label"><strong>Lugar:</strong></label>
+                        <input type="place" class="form-control" id="place" name="place">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Agendar Cita</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
+{% endblock %}

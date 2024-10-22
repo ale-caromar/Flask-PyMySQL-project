@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Registrar evolución{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="me-4">Registrar evolución - Historia clínica</h2>
+        <div class="d-flex" style="gap: 15px;">
+            <a href="{{ url_for('all_patients') }}" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Regresar">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="line-separator"></div>
+    
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="d-flex justify-content-center">
+                <form action="{{ url_for('add_entry', patient_id=patient['id']) }}" method="POST">
+                    <input type="hidden" name="user_id" value="{{ session['user_id'] }}">
+                    <input type="hidden" name="patient_id" value="{{ patient['id'] }}">
+                
+                    <div class="form-group">
+                        <label for="reason_consult">Motivo de consulta</label>
+                        <textarea class="form-control" name="reason_consult"></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label><strong>Consumo habitual de medicamentos</strong></label><br>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="medication_yes" name="medication" value="yes" class="form-check-input" onclick="toggleMedicationField(true)">
+                            <label for="medication_yes" class="form-check-label">Sí</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input type="radio" id="medication_no" name="medication" value="no" class="form-check-input" onclick="toggleMedicationField(false)">
+                            <label for="medication_no" class="form-check-label">No</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3" id="medication_field" style="display: none;">
+                        <label for="medications" class="form-label"><strong>¿Cuáles?</strong></label>
+                        <input type="text" class="form-control" id="medication" name="medication">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personal_history">Antecedentes personales</label>
+                        <textarea class="form-control" name="personal_history" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="familiar_history">Antecedentes familiares</label>
+                        <textarea class="form-control" name="familiar_history" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="personal_area">Área personal</label>
+                        <textarea class="form-control" name="personal_area"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="social_area">Área social</label>
+                        <textarea type="text" class="form-control" name="social_area"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="familiar_area">Área familiar</label>
+                        <textarea class="form-control" name="familiar_area"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="occupational_area">Área ocupacional</label>
+                        <textarea class="form-control" name="occupational_area"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleMedicationField(show) {
+        const medicationField = document.getElementById('medication_field');
+        medicationField.style.display = show ? 'block' : 'none';
+    }
+</script>
+
+
+{% endblock %}

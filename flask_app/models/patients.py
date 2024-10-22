@@ -167,42 +167,55 @@ class Patient(Person):
         return es_valido
     
 
-    #Método para mostrar una lista de los pacientes registrados.
+    # Método para mostrar una lista de los pacientes registrados.
     @classmethod
-    def get_all(cls):
-        # Consulta SQL para obtener datos de los pacientes registrados.
+    def get_all(cls, user_id):
+        # Consulta SQL para obtener datos de los pacientes registrados por el usuario.
         query = """
                 SELECT patient.id AS patient_id, patient.*, person.* 
                 FROM patient
-                JOIN person ON person.id = patient.person_id;
+                JOIN person ON person.id = patient.person_id
+                WHERE patient.user_id = %(id)s;
                 """
-
+        
         # Ejecuta la consulta en la base de datos 'lifeblue_db' y almacena los resultados.
-        results = connectToMySQL('lifeblue_db').query_db(query)
+        # Pasamos el 'user_id' como un diccionario para que la consulta lo use.
+        data = {'id': user_id}
+        results = connectToMySQL('lifeblue_db').query_db(query, data)
 
         # Inicializa una lista vacía para almacenar los objetos pacientes.
         patients = []
 
-        # Recorre cada registro de paciente obtenido de la consulta.
-        for patient in results:
-            # Crea una instancia de la clase correspondiente al paciente utilizando los datos del registro
-            # y la añade a la lista de pacientes.
-            patients.append(cls(patient))
+        # Verifica si hay resultados antes de intentar iterar sobre ellos.
+        if results:
+            # Recorre cada registro de paciente obtenido de la consulta.
+            for patient in results:
+                # Crea una instancia de la clase correspondiente al paciente utilizando los datos del registro
+                # y la añade a la lista de pacientes.
+                patients.append(cls(patient))
 
         # Devuelve la lista completa de pacientes.
         return patients
+
     
 
-    # Método de clase para obtener un paciente específico por su ID.
     @classmethod
     def patient_by_id(cls, form_patient):
         # Define la consulta SQL para seleccionar datos del paciente y su información personal.
         query = """
-                SELECT patient.*, person.*, history.*, history.created_at
-                FROM patient
-                JOIN person ON patient.person_id = person.id
-                LEFT JOIN history ON history.patient_id = patient.id
-                WHERE patient.id = %(id)s
+                SELECT 
+                    patient.*, 
+                    person.*, 
+                    history.*, 
+                    history.created_at AS history_created_at
+                FROM 
+                    patient
+                JOIN 
+                    person ON patient.person_id = person.id
+                LEFT JOIN 
+                    history ON history.patient_id = patient.id
+                WHERE 
+                    patient.id = %(id)s
                 """
 
         # Crea un diccionario con el ID del paciente que se recibirá desde el formulario.
@@ -213,16 +226,21 @@ class Patient(Person):
         # Ejecuta la consulta SQL pasando el diccionario como parámetro.
         results = connectToMySQL('lifeblue_db').query_db(query, data)
 
-        # Comprueba si no se obtuvieron resultados de la consulta.
-        if not results:  # Si no hay resultados, devuelve None.
-            return None, None # Retorna None para paciente y para historia clínica.
-        
-        # Si se obtuvieron resultados, almacena el primer resultado como paciente.
-        patient = results[0]  # Primer resultado es el paciente
-        histories = results[1:]  # Los siguientes resultados podrían ser de historia clínica
+        # Imprimir los resultados para depuración
+        print(f"Resultados de la consulta: {results}")
 
-        # Devuelve el paciente encontrado y su historia clínica (si hay).
+        # Verifica si hay resultados
+        if not results:
+            return None, []  # Devuelve None si no se encontró al paciente y una lista vacía de historias
+
+        # Obtén la información del paciente de la primera fila
+        patient = results[0]  # El primer resultado contiene los datos del paciente
+
+        # Extrae las historias clínicas
+        histories = [row for row in results if row['history.id']]
+
         return patient, histories
+
 
 
     # Método de clase para actualizar la información de un paciente en la base de datos.       
@@ -254,8 +272,6 @@ class Patient(Person):
         # Ejecuta la consulta para actualizar los datos en las tablas person y patient.
         results = connectToMySQL('lifeblue_db').query_db(query, formulario)
 
-        # Envía un mensaje de éxito al usuario indicando que los datos han sido actualizados.
-        flash('Los datos del paciente han sido actualizados exitosamente')
         # Devuelve el resultado de la ejecución de la consulta.
         return results
 

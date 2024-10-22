@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Ver Citas{% endblock %}
+
+{% block content %}
+<div class="container mt-5 d-flex flex-column" style="min-height: 80vh;">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="me-4">Agenda</h2>
+        <div class="d-flex" style="gap: 15px;">
+            <a href="{{ url_for('schedule') }}" class="btn btn-primary" data-bs-toggle="tooltip" title="Programar cita">
+                <i class="fas fa-calendar-plus"></i>
+            </a>
+            <a href="{{ url_for('dashboard') }}" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Regresar">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="line-separator"></div>
+
+    {% if appointments %}
+        <!-- Sección de citas confirmadas -->
+        <h4 class="mt-4">Citas Agendadas</h4>
+        <div class="line-separator"></div>
+        <div class="calendar d-flex flex-wrap gap-3">
+            {% for appointment in appointments if appointment.state.lower() == 'confirmada' %}
+                <div class="calendar-item bg-success text-white p-3 rounded mb-3" style="width: 250px; height: 180px;">
+                    <h6 class="card-title">Paciente: {{ appointment.patient_first_name }} {{ appointment.patient_last_name }}</h6>
+                    <p class="card-text">
+                        <strong>Fecha:</strong> {{ appointment.date }}<br>
+                        <strong>Hora:</strong> {{ appointment.hour }}<br>
+                        <strong>Lugar:</strong> {{ appointment.place }}
+                    </p>
+                    
+                    <!-- Botones solo para citas confirmadas -->
+                    <div class="mt-auto d-flex justify-content-between align-items-center w-100">
+                        <div class="me-auto">
+                            <form action="{{ url_for('completed_appointment') }}" method="post" class="no-border-form" onsubmit="return confirm('¿Estás seguro de que deseas marcar esta cita como completada? Esta acción no se puede deshacer.')">
+                                <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                                <button type="submit" class="btn btn-light btn-sm" data-bs-toggle="tooltip" title="Cita completada">
+                                    <i class="fas fa-check-circle"></i>
+                                </button>
+                            </form>                            
+                        </div>
+                        <div class="me-auto">
+                            <a href="{{ url_for('reschedule_route', appointment_id=appointment.id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Reprogramar cita">
+                                <i class="fas fa-clock-rotate-left"></i> 
+                            </a>
+                        </div>
+                        <div class="ms-auto">
+                            <form action="{{ url_for('cancel_appointment') }}" method="post" class="no-border-form" onsubmit="return confirm('¿Estás seguro de que deseas cancelar esta cita? Esta acción no se puede deshacer.');">
+                                <input type="hidden" name="appointment_id" value="{{ appointment.id }}">
+                                <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Cancelar cita">
+                                    <i class="fas fa-times-circle"></i> 
+                                </button>
+                            </form> 
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+                <!-- Sección de citas completadas -->
+        <h4 class="mt-4">Citas Completadas</h4>
+        <div class="line-separator"></div>
+        <div class="calendar d-flex flex-wrap gap-3">
+            {% for appointment in appointments if appointment.state.lower() == 'completada' %}
+            <div class="calendar-item bg-secondary text-white p-3 rounded mb-3" style="width: 250px; min-height: 120px;">
+                    <h6 class="card-title">Paciente: {{ appointment.patient_first_name }} {{ appointment.patient_last_name }}</h6>
+                    <p class="card-text">
+                        <strong>Fecha:</strong> {{ appointment.date }}<br>
+                        <strong>Hora:</strong> {{ appointment.hour }}<br>
+                        <strong>Lugar:</strong> {{ appointment.place }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Sección de citas canceladas -->
+        <h4 class="mt-4">Citas Canceladas</h4>
+        <div class="line-separator"></div>
+        <div class="calendar d-flex flex-wrap gap-3">
+            {% for appointment in appointments if appointment.state.lower() == 'cancelada' %}
+            <div class="calendar-item bg-danger text-white p-3 rounded mb-3" style="width: 250px; min-height: 120px;">
+                    <h6 class="card-title">Paciente: {{ appointment.patient_first_name }} {{ appointment.patient_last_name }}</h6>
+                    <p class="card-text">
+                        <strong>Fecha:</strong> {{ appointment.date }}<br>
+                        <strong>Hora:</strong> {{ appointment.hour }}<br>
+                        <strong>Lugar:</strong> {{ appointment.place }}
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% else %}
+        <p class="text-center mt-4">No hay citas programadas.</p>
+    {% endif %}
+</div>
+
+<div class="mb-5"></div>
+
+{% endblock %}

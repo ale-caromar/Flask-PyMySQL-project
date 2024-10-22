@@ -9,8 +9,12 @@
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="me-4">Todos los pacientes</h2> 
             <div class="d-flex" style="gap: 15px;">
-                <a href="{{ url_for('dashboard') }}" class="btn btn-success btn-sm"><img src="{{ url_for('static', filename='images/back.png') }}" style="width:20px;height:20px;"></a>
-                <a href="{{ url_for('patient_register')}}" class="btn btn-primary btn-sm">Nueva historia clínica</a>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-success btn-sm"  data-bs-toggle="tooltip" title="Regresar">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <a href="{{ url_for('patient_register')}}" class="btn btn-primary btn-sm"  data-bs-toggle="tooltip" title="Nueva historia clínica">
+                    <i class="fas fa-file-medical"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -38,14 +42,17 @@
                                 <td>{{ patient.docu_number }}</td>
                                 <td>{{ patient.phone }}</td>
                                 <td>
-                                    <a href="{{ url_for('show_patient', id=patient.id) }}" class="btn btn-primary btn-sm">
-                                        <img src="{{ url_for('static', filename='images/more.png') }}" style="width:20px;height:20px;">
+                                    <a href="{{ url_for('show_patient', id=patient.id) }}" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Ver datos personales del paciente">
+                                        <i class="fas fa-file-alt"></i>
                                     </a> 
-                                    <a href="{{ url_for('edit_patient', patient_id=patient.id) }}" class="btn btn-warning btn-sm">
-                                        <img src="{{ url_for('static', filename='images/update.png') }}" style="width:20px;height:20px;">
+                                    <a href="{{ url_for('add_route', patient_id=patient.id) }}" class="btn btn-secondary btn-sm" data-bs-toggle="tooltip" title="Registrar evolución">
+                                        <i class="fas fa-file"></i> <i class="fas fa-plus"></i>
                                     </a>
-                                    <a href="{{ url_for('delete_patient', id=patient.id) }}" class="btn btn-danger btn-sm"  onclick="return confirm('¿Estás seguro de que deseas eliminar a este paciente? Recuerda que este registro se debe conservar durante 15 años.');">
-                                        <img src="{{ url_for('static', filename='images/delete.png') }}" style="width:20px;height:20px;">
+                                    <a href="{{ url_for('edit_patient', patient_id=patient.id) }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Editar datos personales del paciente">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                    <a href="{{ url_for('delete_patient', id=patient.id) }}" class="btn btn-danger btn-sm"  onclick="return confirm('¿Estás seguro de que deseas eliminar a este paciente? Recuerda que este registro se debe conservar durante 15 años.');" data-bs-toggle="tooltip" title="Eliminar los registros del paciente">
+                                        <i class="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>

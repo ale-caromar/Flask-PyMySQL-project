@@ -38,23 +38,29 @@ class User(Person):
     def save_user(cls, formulario):
         
         # Consulta para insertar los datos en la tabla person.
-        # Esta consulta añade la información de la persona en la tabla person
-        person_query = "INSERT INTO person (first_name, last_name, docu_type, docu_number, email, phone, address) VALUES (%(first_name)s, %(last_name)s, %(docu_type)s, %(docu_number)s, %(email)s, %(phone)s, %(address)s)"
+        person_query = """
+            INSERT INTO person (first_name, last_name, docu_type, docu_number, email, phone, address) 
+            VALUES (%(first_name)s, %(last_name)s, %(docu_type)s, %(docu_number)s, %(email)s, %(phone)s, %(address)s)
+        """
 
         # Ejecuta la query para insertar los datos en la tabla person
-        # Se usa el formulario para tomar los valores y se retorna el id generado para esa persona
         person_id = connectToMySQL('lifeblue_db').query_db(person_query, formulario)
 
         # Añadir el person_id obtenido al formulario para poder asociarlo con la tabla user
         formulario['person_id'] = person_id
 
         # Consulta SQL para insertar un nuevo registro en la tabla user.
-        # Esta consulta vincula el registro de la persona recién creado con el registro de usuario.
-        user_query = "INSERT INTO user (person_id, university, professional_card, professional_reg, other_degrees, password) VALUES (%(person_id)s, %(university)s, %(professional_card)s, %(professional_reg)s, %(other_degrees)s, %(password)s)"
+        user_query = """
+            INSERT INTO user (person_id, university, professional_card, professional_reg, other_degrees, password) 
+            VALUES (%(person_id)s, %(university)s, %(professional_card)s, %(professional_reg)s, %(other_degrees)s, %(password)s)
+        """
 
         # Ejecuta la query para insertar los datos del usuario en la tabla user.
-        result = connectToMySQL('lifeblue_db').query_db(user_query, formulario)
-        return result
+        user_id = connectToMySQL('lifeblue_db').query_db(user_query, formulario)
+
+        # Retorna el user_id (ID del usuario recién insertado)
+        return user_id
+
     
     # Método estático para validar los datos ingresados en el formulario de registro.
     @staticmethod
@@ -176,7 +182,23 @@ class User(Person):
     @classmethod
     def get_by_id(cls, formulario):
         # Esta consulta realiza un JOIN para obtener la información del usuario y la persona relacionada
-        query = "SELECT p.*, u.* FROM person p JOIN user u ON p.id = u.person_id WHERE u.id = %(id)s;"
+        query = """SELECT 
+                    p.id AS person_id,  
+                    p.first_name, 
+                    p.last_name, 
+                    p.docu_type, 
+                    p.docu_number, 
+                    p.phone, 
+                    p.address,
+                    p.email, 
+                    u.*
+                FROM 
+                    person p 
+                JOIN 
+                    user u ON p.id = u.person_id 
+                WHERE 
+                    u.id = %(id)s;
+                """
         result = connectToMySQL('lifeblue_db').query_db(query, formulario)
 
          # Si se encuentra el usuario, se retorna una instancia de User

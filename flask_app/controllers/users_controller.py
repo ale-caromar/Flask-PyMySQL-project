@@ -117,6 +117,7 @@ def profile():
 
     user = User.get_by_id(formulario)
 
+
     # Renderiza la plantilla 'profile.html' pasando los datos del usuario.
     return render_template('profile.html', user=user)
 

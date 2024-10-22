@@ -1,11 +1,6 @@
 # Importa la conexión con la base de datos desde la configuración.
 from flask_app.config.mysqlconnection import connectToMySQL
 
-# Importa la clase Person
-from flask_app.models.persons import Person
-
-# Importa la clase User
-from flask_app.models.users import User
 
 # Definir la clase History
 class History:
@@ -16,11 +11,30 @@ class History:
         self.reason_consult = data['reason_consult']
         self.medication = data['medication']
         self.personal_history = data['personal_history']
+        self.familiar_history = data['familiar_history']
         self.personal_area = data['personal_area']
         self.social_area = data['social_area']
         self.familiar_area = data['familiar_area']
         self.occupational_area = data['occupational_area']
-        self.created_at = data['created_at']
-        self.updated_at = data['updated_at']
+
+    @classmethod
+    def add_entry(cls, formulario):
+        # Define una consulta SQL para insertar un nuevo registro en la tabla 'history'
+        query = """
+                    INSERT INTO history (reason_consult, medication, personal_history, familiar_history,
+                    personal_area, social_area, familiar_area, occupational_area, user_id, patient_id, created_at)
+                    VALUES (%(reason_consult)s, %(medication)s, %(personal_history)s, %(familiar_history)s, 
+                    %(personal_area)s, %(social_area)s, %(familiar_area)s, %(occupational_area)s, 
+                    %(user_id)s, %(patient_id)s, NOW());
+                """
+        
+        # Ejecuta la consulta SQL usando la función 'query_db' y pasa los datos del formulario
+        # Se espera que 'formulario' contenga los campos necesarios para la inserción.
+        results = connectToMySQL('lifeblue_db').query_db(query, formulario)
+        
+        # Devuelve el resultado de la consulta, que puede ser el ID del nuevo registro insertado.
+        return results
+
+
 
 

@@ -9,14 +9,14 @@
         <h2 class="me-4">Perfil de {{ user.first_name }} {{ user.last_name }}</h2>
         <div class="d-flex" style="gap: 15px;">
             <form class="no-border-form" action="/delete_profile" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar tu perfil? Esta acción no se puede deshacer.');">
-                <a href="{{ url_for('dashboard') }}" class="btn btn-success btn-sm">
-                    <img src="{{ url_for('static', filename='images/back.png') }}" style="width:20px;height:20px;">
+                <a href="{{ url_for('dashboard') }}" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Regresar">
+                    <i class="fas fa-arrow-left"></i>
                 </a>
-                <a href="{{ url_for('update_route') }}" class="btn btn-warning btn-sm">
-                    <img src="{{ url_for('static', filename='images/update.png') }}" style="width:20px;height:20px;">
+                <a href="{{ url_for('update_route') }}" class="btn btn-warning btn-sm" data-bs-toggle="tooltip" title="Editar mi información">
+                    <i class="fas fa-pencil-alt"></i>
                 </a>
-                <button type="submit" class="btn btn-danger btn-sm">
-                    <img src="{{ url_for('static', filename='images/delete.png') }}" style="width:20px;height:20px;">
+                <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Eliminar perfil">
+                    <i class="fas fa-trash"></i>
                 </button>
             </form>
         </div>

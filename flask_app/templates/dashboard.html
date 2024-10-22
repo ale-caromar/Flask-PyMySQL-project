@@ -3,13 +3,22 @@
 {% block title %}Life Blue{% endblock %}
 
 {% block content %}
-    
-<!-- Contenedor principal con el logo -->
+
 <div class="main-container">
     <div class="logo-container">
-        <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Tu Logo" class="logo">
-        <h1>Bienvenido, {{ user.profession }} {{ user.first_name }} {{ user.last_name }}</h1>
+        <img src="{{ url_for('static', filename='images/logo2.png') }}" alt="Logo" class="logo">
+        <h1>{{ user.profession }} {{ user.first_name }} {{ user.last_name }}</h1>
+        <br>
+        <div id="react-dashboard"></div> <!-- Componente React -->
     </div>
 </div>
 
+        
+
+
+<!-- Incluye las dependencias de React -->
+<script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="{{ url_for('static', filename='js/welcome.js') }}"></script>
 {% endblock %}
+
