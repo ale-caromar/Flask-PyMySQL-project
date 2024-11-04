@@ -279,25 +279,23 @@ class Patient(Person):
     # Método para eliminar un paciente
     @classmethod
     def delete_patient(cls, formulario):
-        # Consulta SQL para eliminar el historial asociado al paciente
-        history_query = """DELETE FROM history WHERE patient_id = %(patient_id)s"""
+        # Elimina las citas asociadas al paciente
+        appointment_query = """DELETE FROM appointment WHERE patient_id = %(patient_id)s"""
+        connectToMySQL('lifeblue_db').query_db(appointment_query, formulario)
 
-        # Ejecuta la consulta para eliminar registros de la historia clínica
+        # Elimina el historial asociado al paciente
+        history_query = """DELETE FROM history WHERE patient_id = %(patient_id)s"""
         connectToMySQL('lifeblue_db').query_db(history_query, formulario)
 
-        # Consulta SQL para eliminar el registro del paciente
+        # Elimina el registro del paciente
         patient_query = """DELETE FROM patient WHERE id = %(patient_id)s"""
-
-        # Ejecuta la consulta para eliminar el registro del paciente
         connectToMySQL('lifeblue_db').query_db(patient_query, formulario)
 
-        # Consulta SQL para eliminar la persona asociada al id de un paciente.
+        # Elimina el registro de la persona asociada al paciente
         person_query = """DELETE FROM person WHERE id = (SELECT person_id FROM patient WHERE id = %(patient_id)s)"""
-
-        # Ejecuta la consulta para eliminar el registro de la persona asociada al paciente
         result = connectToMySQL('lifeblue_db').query_db(person_query, formulario)
 
-        # Devuelve el resultado del proceso
         return result
+
 
 

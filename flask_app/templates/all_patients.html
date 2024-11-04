@@ -42,7 +42,7 @@
                                 <td>{{ patient.docu_number }}</td>
                                 <td>{{ patient.phone }}</td>
                                 <td>
-                                    <a href="{{ url_for('show_patient', id=patient.id) }}" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Ver datos personales del paciente">
+                                    <a href="{{ url_for('show_patient', id=patient.id) }}" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" title="Ver informe del paciente">
                                         <i class="fas fa-file-alt"></i>
                                     </a> 
                                     <a href="{{ url_for('add_route', patient_id=patient.id) }}" class="btn btn-secondary btn-sm" data-bs-toggle="tooltip" title="Registrar evolución">

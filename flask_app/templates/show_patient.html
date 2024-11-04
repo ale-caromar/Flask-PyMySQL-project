@@ -8,14 +8,9 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2 class="me-4">Paciente {{ patient.first_name }} {{patient.last_name}}</h2>
         <div class="d-flex" style="gap: 15px;">
-            <form class="no-border-form" action="/delete_patient" method="POST" onsubmit="return confirm('Si haces clic en aceptar no podrás recuperar la Información. ¿Deseas continuar? Ten en cuenta que la historia clínica se debe conservar por 15 años.');">
-                <a href="{{ url_for('all_patients') }}" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Regresar">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
-                <button type="submit" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" title="Eliminar paciente">
-                    <i class="fas fa-trash"></i>
-                </button>
-            </form>
+            <a href="{{ url_for('all_patients') }}" class="btn btn-success btn-sm" data-bs-toggle="tooltip" title="Regresar">
+                <i class="fas fa-arrow-left"></i>
+            </a>
         </div>
     </div>
     <!-- Línea de separación -->
