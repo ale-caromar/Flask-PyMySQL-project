@@ -12,5 +12,5 @@ from flask_app.controllers import histories_controller
 
 #Ejecuta la aplicación
 if __name__ == "__main__": #verifica si el script se está ejecutando directamente o si se está importando en otro módulo.
-    app.run (debug = True) #app.run pone en marcha el servidor y debug activa el modo depuración
+    app.run(debug=True) #app.run pone en marcha el servidor y debug activa el modo depuración
 
